@@ -9,4 +9,8 @@ Steps I went through:
 5) python manage.py startapp APP_NAME (encylopedia? and/or just wiki)
 6) Create Page: Form (see Notes/3)
 7) {% extends "tasks/layout.html" %} (change tasks)
-8) 
+8) Follow along with Lecture and make notes/copy the examplary code
+
+9) Check in index.html to Create New Page
+10) End up(9) in layout.html and copy Home code
+11) 
