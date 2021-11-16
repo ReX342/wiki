@@ -16,12 +16,12 @@ class NewEntryForm(forms.Form):
     title = forms.CharField(label="Entry title", widget=forms.TextInput(attrs={'class' : 'form-control col-md-8 col-lg-8'}))
     content = forms.CharField(widget=forms.Textarea(attrs={'class' : 'form-control col-md-8 col-lg-8', 'rows' : 10}))
     edit = forms.BooleanField(initial=False, widget=forms.HiddenInput(), required=False)
-
+#This is default code
 def index(request):
     return render(request, "encyclopedia/index.html", {
         "entries": util.list_entries()
     })
- 
+# Our entry function passes a request argument and an entry argument
 def entry(request, entry):
     markdowner = Markdown()
     # use get_entry function already provided (to get the content)
@@ -34,34 +34,50 @@ def entry(request, entry):
                     "entryTitle": entry
             })
     else:
+        #if we do have an entry, show the page
         return render(request, "encyclopedia/entry.html", {
+            #Make sure it's marked down
             "entry":  markdowner.convert(entryPage),
+            #the entry of the title is keyword entry
             "entryTitle": entry
         })
-        
+
 def newEntry(request):
+    #we want to upload data so we'll be using post
     if request.method == "POST":
+        #everything we requested is in post and can be formatted onto a form
         form = NewEntryForm(request.POST)
         if form.is_valid():
+            #have this format read out title
             title = form.cleaned_data["title"]
+            #and its (also cleaned out) content
             content = form.cleaned_data["content"]
+            #getting an entry has a function, but if there's no title or we're editing, then
             if(util.get_entry(title) is None or form.cleaned_data["edit"] is True):
+                #we save our title and content
                 util.save_entry(title,content)
+                #we look at our entry
                 return HttpResponseRedirect(reverse("entry", kwargs={"entry": title}))
             else:
+                #if there's a (not None) title, then it exists (under that title as an entry)
                 return render(request, "encyclopedia/newEntry.html", {
                 "form": form,
                 "existing": True,
                 "entry": title
                 })
         else:
+            #if it doesn't exist and can't be created based on the form
             return render(request, "encyclopedia/newEntry.html", {
+                #it being the form
                 "form": form,
+                #it doesn't exist
                 "existing": False
             })
     else:
         return render(request,"encyclopedia/newEntry.html", {
+            #otherwise, we're just trying to create a entry form
             "form": NewEntryForm(),
+            #because it doesn't exist yet
             "existing": False
         })             
 
