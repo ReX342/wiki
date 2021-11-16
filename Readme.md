@@ -13,4 +13,5 @@ Steps I went through:
 
 9) Check in index.html to Create New Page
 10) End up(9) in layout.html and copy Home code
-11) 
+11) https://cs50.harvard.edu/web/2020/projects/1/wiki/
+
