@@ -15,3 +15,5 @@ Steps I went through:
 10) End up(9) in layout.html and copy Home code
 11) https://cs50.harvard.edu/web/2020/projects/1/wiki/
 
+12) If you want to allow for an HTML string to be outputted, you can do so with the safe filter (as by adding |safe after the variable name you’re substituting).
+13) 
