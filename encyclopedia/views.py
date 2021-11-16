@@ -6,8 +6,8 @@ from django.shortcuts import render
 from django.http import HttpResponseRedirect
 from django import froms
 from django.urls import reverse
+#RTM: https://docs.djangoproject.com/en/2.2/_modules/django/contrib/auth/decorators/
 from django.contrib.auth.decorators import login_required
-#RTM
 
 from . import util
 from markdown2 import Markdown
