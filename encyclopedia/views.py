@@ -24,9 +24,13 @@ def index(request):
  
 def entry(request, entry):
     markdowner = Markdown()
-    entryPage = util.gete_entry(entry)
+    # use get_entry function already provided (to get the content)
+    entryPage = util.get_entry(entry)
+    # in case the page doesn't exist yet.
     if entryPage is None:
+        #we don't need to read the content, so we just display another html page
             return render(request, "encyclopedia/nonExistingEntry.html", {
+                #we can still mention the title of what we were looking for
                     "entryTitle": entry
             })
     else:
