@@ -80,6 +80,8 @@ Visiting /wiki/TITLE, where TITLE is the title of an encyclopedia entry, should 
 in urls.py
 urlpatterns = [
     path("wiki/<str:entry>", views.entry, name="entry"),
+
+
 # The view should get the content of the encyclopedia entry by calling the appropriate util function.
 in views.py
 def entry(request, entry):
@@ -117,3 +119,5 @@ finish entry in views.py
             #the entry of the title is keyword entry
             "entryTitle": entry
         })
+
+29) Figoute out ```python urlpatterns = [] ``` notation
