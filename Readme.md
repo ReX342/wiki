@@ -78,14 +78,18 @@ Challenge for those more comfortable: If you’re feeling more comfortable, try 
 # Entry Page: 
 Visiting /wiki/TITLE, where TITLE is the title of an encyclopedia entry, should render a page that displays the contents of that encyclopedia entry.
 in urls.py
+
+```python
 urlpatterns = [
     path("wiki/<str:entry>", views.entry, name="entry"),
-
+```
 
 # The view should get the content of the encyclopedia entry by calling the appropriate util function.
 in views.py
+```python
 def entry(request, entry):
     entryPage = util.get_entry(entry)
+```
 # If an entry is requested that does not exist, the user should be presented with an error page indicating that their requested page was not found.
 (continued) in views.py
     if entryPage is None:
@@ -120,4 +124,203 @@ finish entry in views.py
             "entryTitle": entry
         })
 
-29) Figoute out ```python urlpatterns = [] ``` notation
+29) Figure out ```python urlpatterns = [] ``` notation
+# Index Page: Update index.html such that, instead of merely listing the names of all pages in the encyclopedia, user can click on any entry name to be taken directly to that entry page.
+
+{% block body %}
+    <h1>All Pages</h1>
+
+    <ul>
+        {% for entry in entries %}
+            <a href = "/wiki/{{ entry}}" ><li>{{ entry }}</li></a>
+        {% endfor %}
+    </ul>
+
+{% endblock %}
+# Search: Allow the user to type a query into the search box in the sidebar to search for an encyclopedia entry.
+add to layout.html
+                <form action="/search">
+to views.py
+```python
+def search(request):
+    value = request.GET.get('q','')                               
+    if(util.get_entry(value) is not None):
+        # worth figuring out the kwargs
+        return HttpResponseRedirect(reverse("entry", kwargs={'entry': value}))
+    else:
+        subStringEntries = []
+        for entry in util.list_entries():
+            # util.get_entry(entry)
+            if value.upper() in util.get_entry(entry).upper():
+                subStringEntries.append(entry)
+                               
+        return render(request, "encyclopedia/results.html", {
+            "entries" : subStringEntries,
+            "search": True,
+            "value": value,
+            "keyword": value
+})    
+```
+urls.py
+    path("search", views.search, name="search")
+create results.html
+{% extends "encyclopedia/layout.html" %}
+
+{% block title %}
+    Encyclopedia: Search Results
+{% endblock %}
+
+{% block body %}
+    <h1>Search Results: {{ keyword }} </h1>
+
+    <ul>
+        {% for entry in entries %}
+            <a href="/wiki/{{ entry }}" ><li>{{ entry }}</li></a>
+        {% endfor %}
+    </ul>
+
+{% endblock %}
+# If the query matches the name of an encyclopedia entry, the user should be redirected to that entry’s page.
+create entry.html
+{% extends "encyclopedia/layout.html" %}
+
+{% block title %}
+    {{ entryTitle }}
+{% endblock %}
+
+{% block body %}
+    <h1> {{ entryTitle }} </h1>
+    <a class="btn btn-outline-secondary" href="/wiki/{{ entryTitle }}/edit" role="button">Edit</a>
+    {{ entry|safe }}
+{% endblock %}
+# If the query does not match the name of an encyclopedia entry, the user should instead be taken to a search results page that displays a list of all encyclopedia entries that have the query as a substring. For example, if the search query were ytho, then Python should appear in the search results.
+earlier in entry.html we used for in logic
+        {% for entry in entries %}
+            <a href="/wiki/{{ entry }}" ><li>{{ entry }}</li></a>
+        {% endfor %}
+# Clicking on any of the entry names on the search results page should take the user to that entry’s page.
+    <a href="/wiki/{{ entry }}" ><li>{{ entry }}</li></a>   
+# New Page: Clicking “Create New Page” in the sidebar should take the user to a page where they can create a new encyclopedia entry.
+copy index code block syntaxis from earlier(index) in layout.html
+                    <a href="{% url 'newEntry' %}">Create New Page</a>                    
+
+# Users should be able to enter a title for the page and, in a textarea, should be able to enter the Markdown content for the page.
+get views.py working
+    from markdown2 import Markdown
+    
+def newEntry(request):
+    if request.method == "POST":
+        form = NewEntryForm(request.POST)
+        if form.is_valid():
+            title = form.cleaned_data["title"]
+            content = form.cleaned_data["content"]
+            if(util.get_entry(title) is None or form.cleaned_data["edit"] is True):
+                util.save_entry(title,content)
+                return HttpResponseRedirect(reverse("entry", kwargs={"entry": title}))
+            else:
+                return render(request, "encyclopedia/newEntry.html", {
+                "form": form,
+                "existing": True,
+                "entry": title
+                })
+        else:
+            return render(request, "encyclopedia/newEntry.html", {
+                "form": form,
+                "existing": False
+            })
+    else:
+        return render(request,"encyclopedia/newEntry.html", {
+            "form": NewEntryForm(),
+            "existing": False
+        })             
+# Users should be able to click a button to save their new page.
+create newEntry.html
+    {% extends "encyclopedia/layout.html" %}
+
+    {% block title %}
+        Create a New Page
+    {% endblock %}
+
+    {% block body %}
+        <h1>New Entry</h1>
+        <form action="{% url 'newEntry' %}" method="post">
+            {% csrf_token %}
+            {{ form }}
+            {{ entry|safe }}        
+            <input type="submit">
+        </form>
+    {% endblock %}
+# When the page is saved, if an encyclopedia entry already exists with the provided title, the user should be presented with an error message.
+30) Write If entry == condition then "Already exists!" error message. 
+# Otherwise, the encyclopedia entry should be saved to disk, and the user should be taken to the new entry’s page.
+It already does this by default.
+# Edit Page: On each entry page, the user should be able to click a link to be taken to a page where the user can edit that entry’s Markdown content in a textarea.
+def edit(request, entry):
+    entryPage = util.get_entry(entry)
+    if entryPage is None:
+        return render (request, "encyclopedia/404.html", {
+            "entryTitle": entry
+        })
+    else:
+        form = NewEntryForm()
+        form.fields["title"].initial = entry
+        form.fields["title"].widget = forms.HiddenInput()
+        form.fields["content"].initial = entryPage
+        form.fields["edit"].initial = True
+        return render(request, "encyclopedia/newEntry.html", {
+            "form": form,
+            "edit": form.fields["edit"].initial,
+            "entryTitle": form.fields["title"].initial
+        })
+# The textarea should be pre-populated with the existing Markdown content of the page. (i.e., the existing content should be the initial value of the textarea).
+31) Collect socks??
+# The user should be able to click a button to save the changes made to the entry.
+32) Profit from step 30 to 31
+# Once the entry is saved, the user should be redirected back to that entry’s page.
+
+# Random Page: Clicking “Random Page” in the sidebar should take user to a random encyclopedia entry.
+layout.html
+                <div>
+                    <a href="{% url 'random' %}">Random Page</a>              
+                </div>
+
+add to views.py
+    import secrets
+
+    def random(request):
+        entries = util.list_entries()
+        # This is why we imported Secrets
+        randomEntry = secrets.choice(entries)
+        # Arbitrary keyword arguments can be passed in a dictionary to the target view.
+        return HttpResponseRedirect(reverse("entry", kwargs={'entry': randomEntry}))
+# Markdown to HTML Conversion: On each entry’s page, any Markdown content in the entry file should be converted to HTML before being displayed to the user. You may use the python-markdown2 package to perform this conversion, installable via pip3 install markdown2.
+
+
+Topic of Missing libraries:
+urls.py
+    path("wiki/<str:entry>", views.entry, name="entry"),
+    path("newEntry", views.newEntry, name="newEntry"),
+    path("wiki/<str:entry>/edit", views.edit, name="edit"),
+    path("random", views.random, name="random"),
+    path("search", views.search, name="search")
+
+view.py
+    from django.shortcuts import render
+    from django.http import HttpResponseRedirect
+    from django import forms
+    from django.urls import reverse
+    from django.contrib.auth.decorators import login_required
+
+    class NewEntryForm(forms.Form):
+        title = forms.CharField(label="Entry title", widget=forms.TextInput(attrs={'class' : 'form-control col-md-8 col-lg-8'}))
+        content = forms.CharField(widget=forms.Textarea(attrs={'class' : 'form-control col-md-8 col-lg-8', 'rows' : 10}))
+        edit = forms.BooleanField(initial=False, widget=forms.HiddenInput(), required=False)
+# Challenge for those more comfortable: If you’re feeling more comfortable, try implementing the Markdown to HTML conversion without using any external libraries, supporting headings, boldface text, unordered lists, links, and paragraphs. You may find using regular expressions in Python helpful.
+33) *Sweats profusely*
+forms.py
+    from django import forms
+
+    class CreateNewList(forms.Form):
+        name = forms.CharField(label="name", max_lenght=200)
+        check = forms.BooleanField(required=False)
+         
