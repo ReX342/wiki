@@ -59,4 +59,18 @@ Challenge for those more comfortable: If you’re feeling more comfortable, try 
 
 20) Start watching the Lecture for the third time: https://docs.djangoproject.com/en/3.2/ref/request-response/
 21) NoReverseMatch: is not a registered namespace
-22)
+22) Got confused on:
+            # with open(entry, "r") as f:
+            #     content = f.read()
+            #     #if value.upper() in entry.upper():
+            #     if value.upper() in content.upper():
+            #         substStringEntries.append(entry)
+             
+23) non exist.page doesn't work yet.
+24)                 <form action="/search">
+
+25) Write the 404 page: It doesn't exist yet.
+26) Fix Titles (# and ## in .md files: Contrast default to new entries)
+
+27) newEntry versus NewEntry (grammar noob versus typos)
+28) 
