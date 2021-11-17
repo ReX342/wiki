@@ -54,4 +54,9 @@ Challenge for those more comfortable: If you’re feeling more comfortable, try 
 16) get entries working instead from YT instead of figuring it out myself
 17) Hope to do the tutorial django assignment first and figure out how to display new pages later
 
-18)
+18) Don't forget about:    {{ entry|safe }} in newentry.html
+19) https://www.w3schools.com/tags/tag_textarea.asp
+
+20) Start watching the Lecture for the third time: https://docs.djangoproject.com/en/3.2/ref/request-response/
+21) NoReverseMatch: is not a registered namespace
+22)
