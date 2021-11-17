@@ -114,12 +114,20 @@ def search(request):
     else:
         subStringEntries = []
         for entry in util.list_entries():
-            if value.upper() in entry.upper():
-                    substStringEntries.append(entry)
-                    
-        return render(request, "encyclopedia/index.html", {
+            # util.get_entry(entry)
+            if value.upper() in util.get_entry(entry).upper():
+                subStringEntries.append(entry)
+                
+            # with open(entry, "r") as f:
+            #     content = f.read()
+            #     #if value.upper() in entry.upper():
+            #     if value.upper() in content.upper():
+            #         substStringEntries.append(entry)
+                 
+                
+        return render(request, "encyclopedia/results.html", {
             "entries" : subStringEntries,
             "search": True,
-            "value": value
+            "value": value,
+            "keyword": value
 })    
-    
