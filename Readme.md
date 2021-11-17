@@ -72,5 +72,48 @@ Challenge for those more comfortable: If you’re feeling more comfortable, try 
 25) Write the 404 page: It doesn't exist yet.
 26) Fix Titles (# and ## in .md files: Contrast default to new entries)
 
-27) newEntry versus NewEntry (grammar noob versus typos)
-28) 
+27) newEntry versus NewEntry (<a href="{% url 'newEntry' %}"> to be precise; otherwise the page wouldn't load)
+28) Begin to want to break assignment down into pieces:
+
+# Entry Page: 
+Visiting /wiki/TITLE, where TITLE is the title of an encyclopedia entry, should render a page that displays the contents of that encyclopedia entry.
+in urls.py
+urlpatterns = [
+    path("wiki/<str:entry>", views.entry, name="entry"),
+# The view should get the content of the encyclopedia entry by calling the appropriate util function.
+in views.py
+def entry(request, entry):
+    entryPage = util.get_entry(entry)
+# If an entry is requested that does not exist, the user should be presented with an error page indicating that their requested page was not found.
+(continued) in views.py
+    if entryPage is None:
+        #we don't need to read the content, so we just display another html page
+            return render(request, "encyclopedia/404.html", {
+                #we can still mention the title of what we were looking for
+                    "entryTitle": entry
+            })
+and 404.html
+{% extends "encyclopedia/layout.html" %}
+
+{% block title %}
+    {{ entryTitle }}?
+{% endblock %}
+
+{% block body %}
+<h2> Looks new to me...</h2>
+<p>
+It looks like your entry doesn't exist... yet!</p>
+<p>
+Click <a href="{% url 'newEntry' %}">here</a> to create your entry, making our wiki bigger and better :D</p>
+{% endblock %}
+
+# If the entry does exist, the user should be presented with a page that displays the content of the entry. The title of the page should include the name of the entry.
+finish entry in views.py
+    else:
+        #if we do have an entry, show the page
+        return render(request, "encyclopedia/entry.html", {
+            #Make sure it's marked down
+            "entry":  markdowner.convert(entryPage),
+            #the entry of the title is keyword entry
+            "entryTitle": entry
+        })
