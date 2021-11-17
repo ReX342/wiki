@@ -1,2 +1,15 @@
-Don't forget about:
-    {{ entry|safe }}
+{% extends "encyclopedia/layout.html" %}
+
+{% block title %}
+    Create a New Page
+{% endblock %}
+
+{% block body %}
+    <h1>New Entry</h1>
+    <form action="{% url 'newEntry' %}" method="post">
+        {% csrf_token %}
+        {{ form }}
+        {{ entry|safe }}        
+        <input type="submit">
+    </form>
+{% endblock %}
