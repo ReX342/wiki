@@ -16,6 +16,18 @@ class NewEntryForm(forms.Form):
     title = forms.CharField(label="Entry title", widget=forms.TextInput(attrs={'class' : 'form-control col-md-8 col-lg-8'}))
     content = forms.CharField(widget=forms.Textarea(attrs={'class' : 'form-control col-md-8 col-lg-8', 'rows' : 10}))
     edit = forms.BooleanField(initial=False, widget=forms.HiddenInput(), required=False)
+        
+# trying to write classes
+# https://docs.djangoproject.com/en/3.2/topics/forms/ for forms
+class NewEntryForm2(forms.Form):
+    title = forms.CharField(max_length = 1000, label="Entry title", widget=forms.TextInput(attrs={'class': 'special'}))
+    # https://docs.djangoproject.com/en/3.2/ref/forms/widgets/
+    content = forms.CharField(widget=forms.Textarea)
+    # Figure out how 'edit' fits
+    # https://docs.djangoproject.com/en/3.2/ref/forms/fields/#django.forms.BooleanField
+    # https://docs.djangoproject.com/en/3.2/ref/forms/fields/
+    
+    
 #This is default code
 def index(request):
     return render(request, "encyclopedia/index.html", {
