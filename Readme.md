@@ -347,3 +347,14 @@ or in .py
     </ul>
     {% endif %}
 ## When the page is saved, if an encyclopedia entry already exists with the provided title, the user should be presented with an error message.
+36)
+Solution steps 25, 28:
+For 404: 
+return HttpResponseNotFound('<h1>Page not found</h1>')
+https://docs.djangoproject.com/en/3.2/topics/http/views/#django.http.Http404
+
+        {% if entry %}
+            We already have that entry
+        {% endif %}
+
+37)

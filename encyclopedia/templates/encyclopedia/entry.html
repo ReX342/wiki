@@ -6,6 +6,17 @@
 
 {% block body %}
     <h1> {{ entryTitle }} </h1>
+    
+    {% if existing %}
+    <h2> We already have an entry for this topic!</h2>
+    <script>
+    function myFunction() {
+    alert("We already have an entry for this topic!"");
+    }
+    </script>
+    <button onclick="myFunction()">We're alerting you!</button>
+
+    {% endif %}
     <a class="btn btn-outline-secondary" href="/wiki/{{ entryTitle }}/edit" role="button">Edit</a>
     {{ entry|safe }}
 {% endblock %}

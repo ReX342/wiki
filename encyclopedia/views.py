@@ -60,11 +60,29 @@ def newEntry(request):
                 return HttpResponseRedirect(reverse("entry", kwargs={"entry": title}))
             else:
                 #if there's a (not None) title, then it exists (under that title as an entry)
-                return render(request, "encyclopedia/newEntry.html", {
-                "form": form,
-                "existing": True,
-                "entry": title
+                
+                # Here's where we want to be taken to the already existing entry after the error
+                #return render(request, "encyclopedia/newEntry.html", {
+                #"form": form,
+                #"existing": True,
+                #"entry": title
+                # I'll be using markdowner in my render{} later
+                markdowner = Markdown()
+                return render(request,"encyclopedia/entry.html", {
+                #I don't want to go to 404.html, I want to go to path  wiki/<str:entry>, so I go to entry.html
+                 
+                #Make sure it's marked down
+                # "entry":  markdowner.convert(entryPage),                
+                # entryPage = util.get_entry(entry) 
+                "entry":  markdowner.convert(util.get_entry(title)),
+                #the entry of the title is keyword entry
+                "entryTitle": title,
+                # if condition for alerting user the entry already exists
+                "existing": True
                 })
+                
+                
+                
         else:
             #if it doesn't exist and can't be created based on the form
             return render(request, "encyclopedia/newEntry.html", {
