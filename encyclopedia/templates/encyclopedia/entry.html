@@ -7,10 +7,17 @@
 {% block body %}
     <h1> {{ entryTitle }} </h1>    
     {% if existing %}
-    <h2> We already have an entry for this topic!</h2>
-    <h3> All your changes have been lost. </h3>
-    <h4> Perhas you would like to edit our already existing entry and expand our knowledge?</h4>
-     {% endif %}
-    <a class="btn btn-outline-secondary" href="/wiki/{{ entryTitle }}/edit" role="button">Edit</a>
-    {{ entry|safe }}
+        <h2> Warning: We already have an entry for this topic!</h2>
+        <h3> All your changes have been lost. </h3>
+    {% else %}
+        <a class="btn btn-outline-secondary" href="/wiki/{{ entryTitle }}/edit" role="button">Edit</a>
+<p>        {{ entry|safe }} </p>
+    {% endif %}
+    {% if edit %}
+        <form action="{% url 'entry' entry=entryTitle %}" method="post">
+        {% csrf_token %}
+        {{ form }} 
+        <button type="submit" class="btn btn-outline-secondary">Save</button>
+        </form>
+    {% endif %}
 {% endblock %}

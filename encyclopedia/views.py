@@ -137,7 +137,8 @@ def edit(request, entry):
         return render(request, "encyclopedia/entry.html", {
             "form": form,
             "edit": form.fields["edit"].initial,
-            "entryTitle": form.fields["title"].initial
+            "entryTitle": form.fields["title"].initial,
+            "entry": entryPage
         })
             
 def random(request):
