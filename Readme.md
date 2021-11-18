@@ -368,3 +368,9 @@ add to entry.html
 # On each entry page, the user should be able to click a link to be taken to a page where the user can edit that entry’s Markdown content in a textarea.
 # The textarea should be pre-populated with the existing Markdown content of the page. (i.e., the existing content should be the initial value of the textarea).
 The content of textarea is fine. But a nice feature would be to see the title instead of "New Entry" above.
+
+39) Looks finished. Let's look back if we possible didn't solve any of the previous steps:
+    Styling: Isn't saved when editing.
+    Do I remove safe (HTML formatting) from         <p> {{ entry|safe }} </p> ?
+
+40) Rebuild.
