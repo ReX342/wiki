@@ -46,6 +46,17 @@ def entry(request, entry):
                     "entryTitle": entry
             })
     else:
+        #Assuming we're in edit mode
+        if request.method == "POST":
+            # Take code from newEntry            
+            form = NewEntryForm(request.POST)
+            if form.is_valid():
+                title = form.cleaned_data["title"]
+                content = form.cleaned_data["content"]
+                if(util.get_entry(title) is None or form.cleaned_data["edit"] is True):
+                    util.save_entry(title,content)
+                    return HttpResponseRedirect(reverse("entry", kwargs={"entry": title}))
+            
         #if we do have an entry, show the page
         return render(request, "encyclopedia/entry.html", {
             #Make sure it's marked down
@@ -123,7 +134,7 @@ def edit(request, entry):
         form.fields["title"].widget = forms.HiddenInput()
         form.fields["content"].initial = entryPage
         form.fields["edit"].initial = True
-        return render(request, "encyclopedia/newEntry.html", {
+        return render(request, "encyclopedia/entry.html", {
             "form": form,
             "edit": form.fields["edit"].initial,
             "entryTitle": form.fields["title"].initial
