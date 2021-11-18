@@ -357,4 +357,9 @@ https://docs.djangoproject.com/en/3.2/topics/http/views/#django.http.Http404
             We already have that entry
         {% endif %}
 
-37)
+## When the page is saved, if an encyclopedia entry already exists with the provided title, the user should be presented with an error message.
+37) if entry exists, show alert to user
+add to entry.html
+    {% if existing %}
+    <h2> We already have an entry for this topic!</h2>
+     {% endif %}
