@@ -9,10 +9,6 @@
     <form action="{% url 'newEntry' %}" method="post">
         {% csrf_token %}
         {{ form }}
-        <!- If entry exists show error, otherwise go to entry-!>
-        {% if entry %}
-            We already have that entry
-        {% endif %}
         <input type="submit">
     </form>
 {% endblock %}

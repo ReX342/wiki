@@ -363,3 +363,8 @@ add to entry.html
     {% if existing %}
     <h2> We already have an entry for this topic!</h2>
      {% endif %}
+
+38) cliking edit button gives us "New Entry" at the top
+# On each entry page, the user should be able to click a link to be taken to a page where the user can edit that entry’s Markdown content in a textarea.
+# The textarea should be pre-populated with the existing Markdown content of the page. (i.e., the existing content should be the initial value of the textarea).
+The content of textarea is fine. But a nice feature would be to see the title instead of "New Entry" above.
