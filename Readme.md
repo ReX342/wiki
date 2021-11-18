@@ -323,4 +323,26 @@ forms.py
     class CreateNewList(forms.Form):
         name = forms.CharField(label="name", max_lenght=200)
         check = forms.BooleanField(required=False)
-         
+34) fix py -m venv project-name         
+35) See above:
+# When the page is saved, if an encyclopedia entry already exists with the provided title, the user should be presented with an error message.
+    30) Write If entry == condition then "Already exists!" error message.
+in newEntry.html ?
+    {% if get_entry(title) == None %}
+        pass
+    {% else %}
+        Alert("Seems like we already have an entry!")
+        # https://docs.djangoproject.com/en/3.2/ref/contrib/messages/
+    {% endif %}
+[or
+    {% if entry is not in entry %}]
+or in .py
+    from django.contrib import messages
+        messages.error(request, 'Entry already exists in our wiki!')
+    {% if messages %}
+    <ul class="messages">
+        {% for message in messages %}
+        <li{% if message.tags %} class="{{ message.tags }}"{% endif %}>{{ message }}</li>
+        {% endfor %}
+    </ul>
+    {% endif %}
