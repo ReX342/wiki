@@ -346,3 +346,4 @@ or in .py
         {% endfor %}
     </ul>
     {% endif %}
+## When the page is saved, if an encyclopedia entry already exists with the provided title, the user should be presented with an error message.
