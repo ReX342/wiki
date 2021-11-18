@@ -11,7 +11,7 @@
         <h3> All your changes have been lost. </h3>
     {% else %}
         <a class="btn btn-outline-secondary" href="/wiki/{{ entryTitle }}/edit" role="button">Edit</a>
-<p>        {{ entry|safe }} </p>
+        <p> {{ entry|safe }} </p>
     {% endif %}
     {% if edit %}
         <form action="{% url 'entry' entry=entryTitle %}" method="post">
