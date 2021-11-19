@@ -438,5 +438,36 @@ duckduckgo:
 https://www.bitdegree.org/learn/bootstrap-col-md
 https://www.tutorialrepublic.com/twitter-bootstrap-tutorial/bootstrap-grid-system.php
 https://getbootstrap.com/docs/5.0/forms/form-control/
-52) Changelog:
+52) Changelog: (Branch suggested: Almost clean slating codebase: Made style ugly)
 Removed forms.py and need for step 33
+53) Disabled submit button for when it already exists (not needed: Submit checks if it exists and should remain being able to do so): 
+<input class="form-control" type="text" placeholder="Disabled input" aria-label="Disabled input example" disabled>
+<input class="form-control" type="text" value="Disabled readonly input" aria-label="Disabled input example" disabled readonly>
+Unclear to me why the first one is greyed out anyway.
+54) Tasks from lecture indicates CharField for passing data(txt) with .POST
+from django import forms
+...
+class NewTaskForm(forms.Form):
+    task = forms.CharField(label="New Task")
+...
+def add(request):
+    if request.method == "POST":
+        form = NewTaskForm(request.POST)
+        if form.is_valid():
+            task = form.cleaned_data["task"]
+            request.session["tasks"] += [task]
+            return HttpResponseRedirect(reverse("tasks:index"))
+        else:
+            return render(request, "tasks/add.html", {
+                "form": form
+            })    
+             
+    return render(request, "tasks/add.html", {
+        "form": NewTaskForm()
+    })
+55) in views.py
+# Create your views here.
+So we create all our pages here (Solution to earlier problem of how many pages to make and yes we should make and html named after every def in views.py: That's what it's there for: To view our [extended layout].html)
+cfr. 6) 9) 13) Pages. 7) 10) how to make the .html (mirrored in .py in question) page
+56) Question 29 lingering: python annotation/styling in this document.
+Other than that almost ready (where to start 52) + clean slate 55)) 
