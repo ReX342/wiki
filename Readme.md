@@ -309,7 +309,6 @@ view.py
     from django.http import HttpResponseRedirect
     from django import forms
     from django.urls import reverse
-    from django.contrib.auth.decorators import login_required
 
     class NewEntryForm(forms.Form):
         title = forms.CharField(label="Entry title", widget=forms.TextInput(attrs={'class' : 'form-control col-md-8 col-lg-8'}))
@@ -377,3 +376,33 @@ The content of textarea is fine. But a nice feature would be to see the title in
 #Got stuck on git again
 41) have Placeholder="# {{title}}" preview in the first line of content (on NewEntry.html)
 == supposed solution (to): double title's ARE a good thing AND I'm doubling down!
+42) How did I come up with forms.py and is it linked/needed for anything?N
+class CreateNewList(forms.Form):
+    name = forms.CharField(label="name", max_lenght=200)
+    check = forms.BooleanField(required=False)
+43) Using Lecture4 video (assignment code also contains this source code)
+in views.py ; you're importing login, logout
+# def login_view(request):
+def NewEntry(title, content):
+# At least this way the content doesn't get lost: The user could save with another title
+else:
+#    return render(request, "users/login.html", {
+    return render(request, "encyclopedia/NewEntry, {
+        "message" : An entry already exists with this title!
+    })
+
+in NewEntry.html
+{ % block body %}
+    {% if message %}
+        <div>{{ message }}</div>
+    {% endif %}
+
+44) Noticed in lecture 4 in 43)
+in views.py
+    from django.contrib.auth import authenticate, login, logout
+Only used in login/logout. Not needed in wiki. Only in next assignment!
+Correction of 32) needed before any profit can be seen: This readme is a partial loss!
+# This used to be in missing libraries, it was removed. Proftis ensured!
+45) Side by side apps in a project is how Django works: Why am I making the git part so hard on myself?
+# Surely the next git project I open will fail (it's always the one I'm working on that keeps working)
+46) venv ?
