@@ -26,7 +26,7 @@ class NewEntryForm(forms.Form):
     # https://docs.djangoproject.com/en/3.2/ref/forms/widgets/
     # class=special is the .html output if you use 'class': 'special' : Nothing special about it.
     ##content = forms.CharField(widget=forms.Textarea)  
-    content = forms.CharField(widget=forms.Textarea(attrs={'class': 'textarea'}))
+    content = forms.CharField(widget=forms.Textarea(attrs={'class': 'form-control'}))
     # Figure out how 'edit' fits
     # def edit happens to be the name of the function where we'll use this edit(-named) value
     # https://docs.djangoproject.com/en/3.2/ref/forms/fields/

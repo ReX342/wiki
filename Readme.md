@@ -423,3 +423,20 @@ This way, the user doesn't lose everything they've typed.
         document.querySelector('form').onsubmit = function() {}
     })
 49) Convinced no JS should be used yet, fixing the old bug of text next to submit button instead of taking the user to the next page should be unfixed error warning that doesn't make the user lose everything.
+50) https://docs.djangoproject.com/en/3.2/ref/forms/fields/
+name = forms.CharField(error_messages={'required': 'Please enter your name'})
+name.clean('')
+This could be our alert (flash from flask/instead of JavaScript or custom/rudimentary solution)
+title = forms.CharField(error_messages={'Already_exists': 'We already have an entry by that title'})
+title.clean('')
+This only works for checking if empty? Only is_valid protects against CSRF?
+51)     content = forms.CharField(widget=forms.Textarea(attrs={'class': 'textarea'}))
+This inpunt-field is too big (low on screen). We're given that css class though in styles.css
+it also feels like this is related to:
+# Users should be able to enter a title for the page and, in a textarea, should be able to enter the Markdown content for the page.
+duckduckgo:
+https://www.bitdegree.org/learn/bootstrap-col-md
+https://www.tutorialrepublic.com/twitter-bootstrap-tutorial/bootstrap-grid-system.php
+https://getbootstrap.com/docs/5.0/forms/form-control/
+52) Changelog:
+Removed forms.py and need for step 33
