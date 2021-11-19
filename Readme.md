@@ -406,3 +406,20 @@ Correction of 32) needed before any profit can be seen: This readme is a partial
 45) Side by side apps in a project is how Django works: Why am I making the git part so hard on myself?
 # Surely the next git project I open will fail (it's always the one I'm working on that keeps working)
 46) venv ?
+
+47) Watching Javascript Lecture 5
+New Entry.html
+<script> function already_exists() {
+    if Existing == True {
+    alert('We already have an entry for that topic!')
+    }
+}
+Put following into submit button?
+<button onclick="already_exists()">Click here to execute the function hello</button>
+This way, the user doesn't lose everything they've typed.
+48) Better yet, use onsubmit="already_exists in listening for events (so add it to submit button instead of vice versa)
+<script>
+    document.addEventListener('DOMContentLoaded', function() {
+        document.querySelector('form').onsubmit = function() {}
+    })
+49) Convinced no JS should be used yet, fixing the old bug of text next to submit button instead of taking the user to the next page should be unfixed error warning that doesn't make the user lose everything.

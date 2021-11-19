@@ -11,4 +11,7 @@
         {{ form }}
         <input type="submit">
     </form>
+    {% if entry %}
+    Error: We already have that entry!
+    {% endif %}
 {% endblock %}
