@@ -374,3 +374,6 @@ The content of textarea is fine. But a nice feature would be to see the title in
     Do I remove safe (HTML formatting) from         <p> {{ entry|safe }} </p> ?
 
 40) Rebuild.
+#Got stuck on git again
+41) have Placeholder="# {{title}}" preview in the first line of content (on NewEntry.html)
+== supposed solution (to): double title's ARE a good thing AND I'm doubling down!
