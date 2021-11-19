@@ -12,21 +12,29 @@ from django.contrib.auth.decorators import login_required
 from . import util
 from markdown2 import Markdown
 
-class NewEntryForm(forms.Form):
+class NewEntryForm2(forms.Form):
     title = forms.CharField(label="Entry title", widget=forms.TextInput(attrs={'class' : 'form-control col-md-8 col-lg-8'}))
     content = forms.CharField(widget=forms.Textarea(attrs={'class' : 'form-control col-md-8 col-lg-8', 'rows' : 10}))
     edit = forms.BooleanField(initial=False, widget=forms.HiddenInput(), required=False)
         
 # trying to write classes
 # https://docs.djangoproject.com/en/3.2/topics/forms/ for forms
-class NewEntryForm2(forms.Form):
+# We'll use this in def entry and def newEntry
+class NewEntryForm(forms.Form):
+    # forms.Form requires input as CharField
     title = forms.CharField(max_length = 1000, label="Entry title", widget=forms.TextInput(attrs={'class': 'special'}))
     # https://docs.djangoproject.com/en/3.2/ref/forms/widgets/
-    content = forms.CharField(widget=forms.Textarea)
+    # class=special is the .html output if you use 'class': 'special' : Nothing special about it.
+    ##content = forms.CharField(widget=forms.Textarea)  
+    content = forms.CharField(widget=forms.Textarea(attrs={'class': 'textarea'}))
     # Figure out how 'edit' fits
-    # https://docs.djangoproject.com/en/3.2/ref/forms/fields/#django.forms.BooleanField
+    # def edit happens to be the name of the function where we'll use this edit(-named) value
     # https://docs.djangoproject.com/en/3.2/ref/forms/fields/
-    
+    # https://docs.djangoproject.com/en/3.2/ref/forms/fields/#django.forms.BooleanField
+    # edit = forms.BooleanField(initial=False, required=False)
+    # We notice the 'edit' field is rendered and this make it ugly, we'll turn it off
+    edit = forms.BooleanField(initial=False, widget=forms.HiddenInput(), required=False)
+
     
 #This is default code
 def index(request):
