@@ -471,3 +471,6 @@ So we create all our pages here (Solution to earlier problem of how many pages t
 cfr. 6) 9) 13) Pages. 7) 10) how to make the .html (mirrored in .py in question) page
 56) Question 29 lingering: python annotation/styling in this document.
 Other than that almost ready (where to start 52) + clean slate 55)) 
+57) I did not set up max_length for CharField ! (How is this possible?)
+https://docs.djangoproject.com/en/3.2/intro/tutorial02/
+Some Field classes have required arguments. CharField, for example, requires that you give it a max_length. That’s used not only in the database schema, but in validation, as we’ll soon see.
