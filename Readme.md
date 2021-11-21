@@ -474,3 +474,36 @@ Other than that almost ready (where to start 52) + clean slate 55))
 57) I did not set up max_length for CharField ! (How is this possible?)
 https://docs.djangoproject.com/en/3.2/intro/tutorial02/
 Some Field classes have required arguments. CharField, for example, requires that you give it a max_length. That’s used not only in the database schema, but in validation, as we’ll soon see.
+58) https://docs.djangoproject.com/en/3.2/ref/forms/api/
+Form.errors
+On Alerting/warning user: warning entry already exists!
+59) https://docs.djangoproject.com/en/3.2/ref/models/querysets/
+Author.objects.values_list('name', 'entry__headline')
+<QuerySet [('Noam Chomsky', 'Impressions of Gaza'),
+ ('George Orwell', 'Why Socialists Do Not Believe in Fun'),
+ ('George Orwell', 'In Defence of English Cooking'),
+ ('Don Quixote', None)]>
+60) CharField has max_length as a requirement in models only.
+Doesn't require max_length as an attribute in classes that are made elsewhere:
+https://docs.djangoproject.com/en/3.2/ref/forms/fields/
+from django import forms
+class CommentForm(forms.Form):
+...     name = forms.CharField(label='Your name')
+...     url = forms.URLField(label='Your website', required=False)
+...     comment = forms.CharField()
+>>> f = CommentForm(auto_id=False)
+>>> print(f)
+61) Search:
+https://docs.djangoproject.com/en/3.2/topics/db/search/
+62) Alert user
+https://docs.djangoproject.com/en/3.2/ref/contrib/messages/
+from django.contrib.messages import constants as messages
+MESSAGE_TAGS = {
+    messages.INFO: '',
+    50: 'critical',
+}
+Change to:
+from django.contrib.messages import constants as messages
+MESSAGE_TAGS = {
+messages.WARNING: 'Entry already exist',
+}
