@@ -22,7 +22,7 @@ class NewEntryForm2(forms.Form):
 # We'll use this in def entry and def newEntry
 class NewEntryForm(forms.Form):
     # forms.Form requires input as CharField
-    title = forms.CharField(max_length = 1000, label="Entry title", widget=forms.TextInput(attrs={'class': 'special'}))
+    title = forms.CharField(max_length = 1000, label="Entry title", widget=forms.TextInput(attrs={'class': 'form-control'}))
     # https://docs.djangoproject.com/en/3.2/ref/forms/widgets/
     # class=special is the .html output if you use 'class': 'special' : Nothing special about it.
     ##content = forms.CharField(widget=forms.Textarea)  
